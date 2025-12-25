@@ -19,14 +19,27 @@ export default function Products() {
         <section className="hero text-center">
           <div className="container">
             <h1>Products</h1>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
-              <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10, padding: 32, maxWidth: 400, width: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.04)' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 32, marginTop: 40, flexWrap: 'wrap' }}>
+              {/* Product 1 */}
+              <div className="product-card">
                 <h2 style={{ marginBottom: 16 }}>The Text Architect</h2>
-                <p style={{ marginBottom: 24, color: '#374151', fontSize: '1.1rem' }}>
+                <p style={{ marginBottom: 24, color: '#111111', fontSize: '1.1rem' }}>
                   The ultimate guide to transforming your text game and becoming the prize. Includes actionable modules and proven strategies.
                 </p>
-                <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#16a34a', marginBottom: '16px' }}>₹599</div>
+                <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#111111', marginBottom: '16px' }}>₹599</div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScqij6IAN8N50f8daRCpP9aagjZsjJQLcGF4c-ZzJY0cwKsuw/viewform?usp=header" className="btn" target="_blank" rel="noopener noreferrer" style={{ maxWidth: 220, width: '100%', margin: '0 auto', display: 'block' }}>
+                  Buy
+                </a>
+                <span className="btn-sub">Instant Digital Access • 100% Secure</span>
+              </div>
+              {/* Product 2 */}
+              <div className="product-card">
+                <h2 style={{ marginBottom: 16 }}>200 Working Openers To Get Replies!</h2>
+                <p style={{ marginBottom: 24, color: '#111111', fontSize: '1.1rem' }}>
+                  Unlock 200 proven openers that actually get responses. Perfect for boosting your conversations and making a memorable first impression.
+                </p>
+                <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#111111', marginBottom: '16px' }}>₹299</div>
+                <a href="#" className="btn" target="_blank" rel="noopener noreferrer" style={{ maxWidth: 220, width: '100%', margin: '0 auto', display: 'block' }}>
                   Buy
                 </a>
                 <span className="btn-sub">Instant Digital Access • 100% Secure</span>

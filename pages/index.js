@@ -21,14 +21,14 @@ export default function Home() {
           <div className="container">
             <span className="hero-tag">WARNING: NOT FOR THE "NICE GUY"</span>
             <h1>Stop Being Her "Pen-Pal"<br />And Start Being The <span className="text-red">Prize</span></h1>
-            <p style={{ fontSize: '1.3rem', marginTop: 20 }}>
+            <p style={{ fontSize: '1.3rem', marginTop: 20, color: '#FFD600' }}>
               How to kill your "Nice Guy" persona, trigger obsession, and finally get the replies you deserve—without being rich, 6ft tall, or manipulative.
             </p>
             <br />
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScqij6IAN8N50f8daRCpP9aagjZsjJQLcGF4c-ZzJY0cwKsuw/viewform?usp=header" className="btn" target="_blank" rel="noopener noreferrer">GET THE TEXT ARCHITECT &raquo;</a>
             <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#16a34a', margin: '18px 0 0 0' }}>Only ₹599 for The Text Architect</div>
-            <span className="btn-sub">Instant Digital Access • 100% Secure</span>
-            <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center', gap: 20, color: 'var(--gray)', fontSize: '0.9rem' }}>
+            <span className="btn-sub" style={{ color: '#FFD600' }}>Instant Digital Access • 100% Secure</span>
+            <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center', gap: 20, color: '#FFD600', fontSize: '0.9rem' }}>
               <span>✅ No Fake "Pickup Lines"</span>
               <span>✅ Works for Introverts</span>
               <span>✅ Indian Context Specific</span>
@@ -43,7 +43,7 @@ export default function Home() {
             <br />
             <p>You have been lied to. For decades, movies taught us that if a girl says "No," you just chase harder. You sing louder. You wait longer. And eventually, she realizes you are "The One."</p>
             <p><strong>In 2025, that doesn't get you the girl. It gets you a restraining order or blocked on Instagram.</strong></p>
-            <p>You aren't failing because you aren't rich enough or handsome enough. You are failing because you are <span className="highlight">predictable</span>. In a digital world where an average attractive girl gets 50+ DMs a week ranging from "Hi dear" to unsolicited pictures, blending in is a death sentence.</p>
+            <p>You aren't failing because you aren't rich enough or handsome enough. You are failing because you are predictable. In a digital world where an average attractive girl gets 50+ DMs a week ranging from "Hi dear" to unsolicited pictures, blending in is a death sentence.</p>
           </div>
         </section>
 
@@ -69,39 +69,52 @@ export default function Home() {
 
         {/* MODULES SECTION */}
         <section>
-          <div className="container">
-            <h2 className="text-center">Introducing: <span className="text-red">The Text Architect</span></h2>
-            <p className="text-center">A Gen-Z Dating Guide for the Modern Indian Man.</p>
-            <div className="module-grid">
-              <div className="module-card">
+          <div
+            className="container"
+            style={{
+              position: 'relative',
+              background: "url('/ironman.png') center/cover no-repeat",
+              minHeight: 420,
+              borderRadius: 12,
+              padding: '40px 20px',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
+              overflow: 'hidden',
+            }}
+          >
+            <div style={{ position: 'relative', zIndex: 2, background: 'rgba(255,255,255,0.65)', borderRadius: 10, padding: 24 }}>
+              <h2 className="text-center">Introducing: <span className="text-red">The Text Architect</span></h2>
+              <p className="text-center">A Gen-Z Dating Guide for the Modern Indian Man.</p>
+              <div className="module-grid">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 1</span>
                 <h3>The "Kill The Nice Guy" Mindset</h3>
                 <p>Why your "unemployed" response time is killing attraction. Learn the "2/3 Rule" of investment and why you must stop saying "Sorry" immediately.</p>
               </div>
-              <div className="module-card">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 2</span>
                 <h3>Your Digital Aura (The Audit)</h3>
                 <p>Your Instagram is your dating credit score. We audit your "Bio," delete your cringe "Cake Murderer" captions, and fix your "creepy vs. catch" ratio.</p>
               </div>
-              <div className="module-card">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 3</span>
                 <h3>The Openers (Beyond "Hi Dear")</h3>
                 <p>3 specific openers that get replies 90% of the time. Stop asking "Had lunch?" and start using the "Assumption" method that makes her chase you to correct you.</p>
               </div>
-              <div className="module-card">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 4</span>
                 <h3>The Middle Game: Passing "Shit Tests"</h3>
                 <p>What to do when she says "I have a boyfriend" or "You're a player." Most guys fold here. You will learn to agree, amplify, and tease your way through it.</p>
               </div>
-              <div className="module-card">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 5</span>
                 <h3>The "Bhaiya" Defense System</h3>
                 <p>The exact script to use the moment she calls you "Bro," "Bhaiya," or "Friend." Do not accept the friendzone. Nuke it instantly with this line.</p>
               </div>
-              <div className="module-card">
+              <div className="module-card" style={{ background: 'rgba(255,255,255,0.45)', color: '#111111' }}>
                 <span className="module-num">Chapter 6</span>
                 <h3>From URL to IRL (The Close)</h3>
                 <p>Stop being her texting buddy. Learn the "Soft Close" strategy to get a date without the awkward "Will you go out with me?" question.</p>
+              </div>
               </div>
             </div>
           </div>

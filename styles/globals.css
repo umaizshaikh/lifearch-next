@@ -1,3 +1,42 @@
+@media (max-width: 600px) {
+    .hero h1 {
+        font-size: 1.85rem !important;
+        line-height: 1.2 !important;
+    }
+    .hero p {
+        font-size: 1.05rem !important;
+    }
+}
+@media (max-width: 600px) {
+    /* Widen the Introducing: The Text Architect section container */
+    .container {
+        max-width: 98vw !important;
+        padding-left: 2vw !important;
+        padding-right: 2vw !important;
+    }
+    /* Widen product cards */
+    .product-card {
+        max-width: 98vw !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+/* Product card style for less vertical padding */
+ .product-card {
+    background: #fff;
+    color: #111111;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px 32px 20px 32px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+}
 :root {
     --primary: #dc2626;
     --dark: #111827;

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 
 // Load PDF.js and Supabase via CDN
@@ -16,16 +17,18 @@ function loadScript(src) {
   });
 }
 
-const getPdfPath = (token) => {
-  const pdfId = token.split('_')[0];
+function getPdfPath(token) {
+  const pdfId = token.split("_")[0];
   switch (pdfId) {
-    case 'PB':
-      return "personality-blueprint/The Architect's Way.pdf";
+    case "PB":
+      return "personality-blueprint/The Text Architect.pdf";
+    case "WO":
+      return "working-openers/Working Openers.pdf";
     default:
-      alert('Invalid product ID in token.');
+      alert("Invalid product ID in token.");
       return null;
   }
-};
+}
 
 const Viewer = () => {
   const viewerRef = useRef();
@@ -80,8 +83,8 @@ const Viewer = () => {
       const { data, error } = await supabaseClient.storage
         .from('life-pdfs')
         .createSignedUrl(pdfPath, 3600);
-      if (error) {
-        console.error('Signed URL error:', error);
+      if (error || !data || !data.signedUrl) {
+        console.error('Signed URL error:', error, data);
         alert('Unable to load your PDF.');
         return;
       }
@@ -106,9 +109,37 @@ const Viewer = () => {
   }, []);
 
   return (
-    <div className="dark" style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
-      <div ref={viewerRef} className="pdfViewer" style={{ padding: 20, overflowY: 'auto' }}></div>
-      <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.15, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
+    <div
+      className="dark pdf-bg"
+      style={{
+        minHeight: '100vh',
+        background: '#000',
+        color: '#fff',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background images, repeated and more visible */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+          opacity: 0.25, // Increased visibility
+          backgroundImage: `url('/animal.png'), url('/professor.png'), url('/tommy.png')`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '300px',
+          backgroundPosition: '0 0, 150px 150px, 300px 300px',
+          mixBlendMode: 'lighten',
+        }}
+      />
+      <div ref={viewerRef} className="pdfViewer" style={{ padding: 20, overflowY: 'auto', position: 'relative', zIndex: 1 }}></div>
+      <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.22, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
     </div>
   );
 };
