@@ -39,7 +39,7 @@ export default function Products() {
                   Unlock 200 proven openers that actually get responses. Perfect for boosting your conversations and making a memorable first impression.
                 </p>
                 <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#111111', marginBottom: '16px' }}>₹299</div>
-                <a href="#" className="btn" target="_blank" rel="noopener noreferrer" style={{ maxWidth: 220, width: '100%', margin: '0 auto', display: 'block' }}>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScqij6IAN8N50f8daRCpP9aagjZsjJQLcGF4c-ZzJY0cwKsuw/viewform?usp=header" className="btn" target="_blank" rel="noopener noreferrer" style={{ maxWidth: 220, width: '100%', margin: '0 auto', display: 'block' }}>
                   Buy
                 </a>
                 <span className="btn-sub">Instant Digital Access • 100% Secure</span>
