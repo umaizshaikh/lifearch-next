@@ -169,7 +169,7 @@ const Viewer = () => {
           zIndex: 1,
           margin: '0 auto',
           width: '100%',
-          maxWidth: '65vw',
+          maxWidth: window.innerWidth <= 600 ? '100vw' : '65vw',
         }}
       ></div>
       <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.22, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
