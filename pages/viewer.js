@@ -23,7 +23,7 @@ function getPdfPath(token) {
     case "PB":
       return "personality-blueprint/The Text Architect.pdf";
     case "WO":
-      return "working-openers/Working Openers.pdf";
+      return "personality-blueprint/Working Openers.pdf";
     default:
       alert("Invalid product ID in token.");
       return null;
@@ -95,13 +95,26 @@ const Viewer = () => {
       container.innerHTML = '';
       const loadingTask = pdfjsLib.getDocument(signedUrl);
       const pdf = await loadingTask.promise;
+      const isMobile = window.innerWidth <= 600;
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 1.25 });
+        let scale = 1.25;
+        if (isMobile) {
+          // Fit to container width
+          const containerWidth = container.offsetWidth || window.innerWidth;
+          const unscaledViewport = page.getViewport({ scale: 1 });
+          scale = containerWidth / unscaledViewport.width;
+        } else {
+          // Reduce scale by 20% for larger screens
+          scale = scale * 0.8;
+        }
+        const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
         container.appendChild(canvas);
         await page.render({ canvasContext: ctx, viewport }).promise;
       }
