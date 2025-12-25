@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // Load PDF.js and Supabase via CDN
 const PDFJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
@@ -30,9 +30,17 @@ function getPdfPath(token) {
   }
 }
 
+
 const Viewer = () => {
   const viewerRef = useRef();
   const watermarkRef = useRef();
+  const [maxWidth, setMaxWidth] = useState('65vw');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setMaxWidth(window.innerWidth <= 600 ? '100vw' : '65vw');
+    }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -169,7 +177,7 @@ const Viewer = () => {
           zIndex: 1,
           margin: '0 auto',
           width: '100%',
-          maxWidth: window.innerWidth <= 600 ? '100vw' : '65vw',
+          maxWidth,
         }}
       ></div>
       <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.22, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
