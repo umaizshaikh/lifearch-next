@@ -126,7 +126,10 @@ const Viewer = () => {
         canvas.height = viewport.height;
         if (isMobile) {
           canvas.style.width = '100vw';
+          canvas.style.maxWidth = '100vw';
+          canvas.style.minWidth = '100vw';
           canvas.style.height = (viewport.height / dpr) + 'px';
+          canvas.style.display = 'block';
         } else {
           canvas.style.width = '100%';
           canvas.style.height = 'auto';
@@ -180,7 +183,26 @@ const Viewer = () => {
           maxWidth,
         }}
       ></div>
-      <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.22, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
+      <div
+        ref={watermarkRef}
+        className="watermark"
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%) rotate(-30deg)',
+          opacity: 0.22,
+          fontSize: 40,
+          color: '#444',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          width: '90vw',
+          textAlign: 'center',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+          maxWidth: '98vw',
+        }}
+      ></div>
     </div>
   );
 };
