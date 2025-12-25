@@ -99,22 +99,30 @@ const Viewer = () => {
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         let scale = 1.25;
+        let viewport;
+        const dpr = window.devicePixelRatio || 1;
         if (isMobile) {
-          // Fit to container width
+          // Fit to container width exactly, and render at device pixel ratio for sharpness
           const containerWidth = container.offsetWidth || window.innerWidth;
           const unscaledViewport = page.getViewport({ scale: 1 });
-          scale = containerWidth / unscaledViewport.width;
+          scale = (containerWidth * dpr) / unscaledViewport.width;
+          viewport = page.getViewport({ scale });
         } else {
-          // Reduce scale by 20% for larger screens
-          scale = scale * 0.8;
+          // Further reduce scale for desktop to fit more content
+          scale = scale * 0.6;
+          viewport = page.getViewport({ scale });
         }
-        const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        canvas.style.width = '100%';
-        canvas.style.height = 'auto';
+        if (isMobile) {
+          canvas.style.width = '100vw';
+          canvas.style.height = (viewport.height / dpr) + 'px';
+        } else {
+          canvas.style.width = '100%';
+          canvas.style.height = 'auto';
+        }
         container.appendChild(canvas);
         await page.render({ canvasContext: ctx, viewport }).promise;
       }
@@ -151,7 +159,19 @@ const Viewer = () => {
           mixBlendMode: 'lighten',
         }}
       />
-      <div ref={viewerRef} className="pdfViewer" style={{ padding: 20, overflowY: 'auto', position: 'relative', zIndex: 1 }}></div>
+      <div
+        ref={viewerRef}
+        className="pdfViewer"
+        style={{
+          padding: 20,
+          overflowY: 'auto',
+          position: 'relative',
+          zIndex: 1,
+          margin: '0 auto',
+          width: '100%',
+          maxWidth: '65vw',
+        }}
+      ></div>
       <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.22, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
     </div>
   );
