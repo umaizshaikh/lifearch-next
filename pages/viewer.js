@@ -1,0 +1,116 @@
+import React, { useEffect, useRef } from 'react';
+
+// Load PDF.js and Supabase via CDN
+const PDFJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+const SUPABASE_URL = 'https://edjymqpwfuthocvujcgf.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkanltcXB3ZnV0aG9jdnVqY2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5OTE0NTgsImV4cCI6MjA4MTU2NzQ1OH0.nd--xDkgSCVurgJ554ab8Up4G7gR0ZtAvym1fSitR_Q';
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+const getPdfPath = (token) => {
+  const pdfId = token.split('_')[0];
+  switch (pdfId) {
+    case 'PB':
+      return "personality-blueprint/The Architect's Way.pdf";
+    default:
+      alert('Invalid product ID in token.');
+      return null;
+  }
+};
+
+const Viewer = () => {
+  const viewerRef = useRef();
+  const watermarkRef = useRef();
+
+  useEffect(() => {
+    (async () => {
+      await loadScript(PDFJS_URL);
+      await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+      const pdfjsLib = window['pdfjs-dist/build/pdf'];
+      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Get params
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      const email = params.get('email');
+      const phone = params.get('phone');
+      if (!token || !email || !phone) {
+        alert('Invalid or incomplete access link.');
+        return;
+      }
+      const pdfPath = getPdfPath(token);
+      if (!pdfPath) return;
+
+      // PIN protection
+      const stored = localStorage.getItem('pin_' + token);
+      let pin = stored;
+      if (!stored) {
+        pin = prompt('Enter your 4-digit PIN:');
+        if (!pin) {
+          alert('PIN is required.');
+          return;
+        }
+        localStorage.setItem('pin_' + token, pin);
+      }
+
+      // Watermark
+      if (watermarkRef.current) {
+        watermarkRef.current.innerText = `Purchased by: ${email} | ${phone}`;
+      }
+
+      // Disable downloads
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (e.ctrlKey && ['s', 'p', 'u'].includes(e.key.toLowerCase())) {
+          e.preventDefault();
+        }
+      });
+
+      // Get signed URL
+      const { data, error } = await supabaseClient.storage
+        .from('life-pdfs')
+        .createSignedUrl(pdfPath, 3600);
+      if (error) {
+        console.error('Signed URL error:', error);
+        alert('Unable to load your PDF.');
+        return;
+      }
+      const signedUrl = data.signedUrl;
+
+      // Load PDF
+      const container = viewerRef.current;
+      container.innerHTML = '';
+      const loadingTask = pdfjsLib.getDocument(signedUrl);
+      const pdf = await loadingTask.promise;
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1.25 });
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        container.appendChild(canvas);
+        await page.render({ canvasContext: ctx, viewport }).promise;
+      }
+    })();
+  }, []);
+
+  return (
+    <div className="dark" style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
+      <div ref={viewerRef} className="pdfViewer" style={{ padding: 20, overflowY: 'auto' }}></div>
+      <div ref={watermarkRef} className="watermark" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', opacity: 0.15, fontSize: 40, color: '#444', pointerEvents: 'none', zIndex: 9999 }}></div>
+    </div>
+  );
+};
+
+export default Viewer;
